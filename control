@@ -1,0 +1,9 @@
+Package: dev.inhertas.ytnocommentpreview
+Name: YTNoCommentPreview
+Version: 1.0.0
+Architecture: iphoneos-arm
+Description: Hide comment section previews under the video player
+Maintainer: InHeritas
+Author: InHeritas
+Section: Tweaks
+Depends: mobilesubstrate (>= 0.9.5000), firmware (>= 11.0)
