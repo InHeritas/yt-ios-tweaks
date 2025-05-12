@@ -6,8 +6,28 @@
 - (void)didMoveToWindow;
 @end
 
-%hook _ASDisplayView
+@interface YTIPivotBarRenderer : NSObject
+- (NSMutableArray *)itemsArray;  // Array containing tab bar items
+@end
 
+@interface YTIPivotBarSupportedRenderers : NSObject
+- (id)pivotBarIconOnlyItemRenderer;
+- (id)pivotBarItemRenderer;
+@end
+
+@interface YTPivotBarIconOnlyItemRenderer : NSObject
+- (NSString *)pivotIdentifier;
+@end
+
+@interface YTPivotBarView : UIView
+- (void)setRenderer:(YTIPivotBarRenderer *)renderer;
+@end
+
+//-------------------------------------------------------------------------------
+// Tweak 1: Hide Comment Preview
+// Removes the comment preview section shown below videos
+//-------------------------------------------------------------------------------
+%hook _ASDisplayView
 - (void)didMoveToWindow {
     %orig;
     
@@ -29,5 +49,24 @@
         [self performSelector:@selector(removeFromSuperview) withObject:nil afterDelay:0.1];
     }
 }
+%end
 
+//-------------------------------------------------------------------------------
+// Tweak 2: Remove Upload Button
+// Removes only the upload button (+) from YouTube's bottom tab bar
+//-------------------------------------------------------------------------------
+%hook YTPivotBarView
+- (void)setRenderer:(YTIPivotBarRenderer *)renderer {
+    NSMutableArray <YTIPivotBarSupportedRenderers *> *items = [renderer itemsArray];
+    
+    NSUInteger uploadIndex = [items indexOfObjectPassingTest:^BOOL(YTIPivotBarSupportedRenderers *renderer, NSUInteger idx, BOOL *stop) {
+        return [[[renderer pivotBarIconOnlyItemRenderer] pivotIdentifier] isEqualToString:@"FEuploads"];
+    }];
+    
+    if (uploadIndex != NSNotFound) {
+        [items removeObjectAtIndex:uploadIndex];
+    }
+    
+    %orig;
+}
 %end
