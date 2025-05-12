@@ -1,5 +1,4 @@
-# YTNoCommentPreview
+# yt-ios-tweaks
 
-A simple tweak that removes the preview line from the comment section below the player in iOS YouTube App.  
-
-This tweak has been tested on YouTube 20.12.4.
+- **YTNoCommentPreview:** Removes the preview line from the comment section below the player.
+- **YTNoUploadTab:** Removes the upload button from bottom tab bar.
