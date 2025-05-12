@@ -6,7 +6,7 @@ INSTALL_TARGET_PROCESSES = YouTube
 include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME = yt-ios-tweaks
-YTNoCommentPreview_FILES = Tweak.x
-YTNoCommentPreview_CFLAGS = -fobjc-arc
+yt-ios-tweaks_FILES = Tweak.x
+yt-ios-tweaks_CFLAGS = -fobjc-arc
 
 include $(THEOS_MAKE_PATH)/tweak.mk
